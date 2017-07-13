@@ -63,7 +63,6 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
                  printf("\n");
 	}
 	printf("\n\n");
-	printf("-----------------------------------------------\n\n");
      }
      else
      {
