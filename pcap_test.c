@@ -89,15 +89,14 @@ int main(int argc, char **argv)
 	struct pcap_pkthdr *header;
 	const u_char *packet;
 	int res = 0;
-		
-	dev = argv[1];
 
 	if (argc == 1)
 	{
-		printf("please select the dev\n");
+		printf("please select the interface\n");
 		exit(1);
 	}
-
+	
+	dev = argv[1];
 	pcd = pcap_open_live(dev, BUFSIZ, 1/*PROMISCUOUS*/, -1, errbuf);
 
 	if (pcd == NULL)
