@@ -16,7 +16,8 @@ void packet_analysis(const u_char *packet)
 
 	unsigned short ether_type;
 	unsigned short ip_type; 
-	char buf[20];   
+	char buf1[20];
+	char buf2[20];   
 	int chcnt =0;
 	int length;
 
@@ -33,11 +34,13 @@ void packet_analysis(const u_char *packet)
 	{	
 		length = iphdr->ip_len;
 		iphdr = (struct libnet_ipv4_hdr *)packet;
+		
 		printf("< IP Packet >\n\n");
-		inet_ntop(AF_INET, &iphdr->ip_src, buf, sizeof(buf));
-		printf("Src IP  : %s\n", buf);
-		inet_ntop(AF_INET, &iphdr->ip_dst, buf, sizeof(buf)); 
-		printf("Dst IP  : %s\n\n", buf);
+		
+		inet_ntop(AF_INET, &iphdr->ip_src, buf1, sizeof(buf1));
+		printf("Src IP  : %s\n", buf1);
+		inet_ntop(AF_INET, &iphdr->ip_dst, buf2, sizeof(buf2)); 
+		printf("Dst IP  : %s\n\n", buf2);
 	}
 	else
 	{
@@ -87,11 +90,11 @@ int main(int argc, char **argv)
 	const u_char *packet;
 	int res = 0;
 		
-	dev = pcap_lookupdev(errbuf);
+	dev = argv[1];
 
-	if (dev == NULL)
+	if (argc == 1)
 	{
-		printf("%s\n", errbuf);
+		printf("please select the dev\n");
 		exit(1);
 	}
 
