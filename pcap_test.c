@@ -15,7 +15,7 @@ void packet_analysis(const u_char *packet)
 	struct libnet_tcp_hdr *tcphdr;
 
 	unsigned short ether_type;
-	unsigned short ip_type; 
+	unsigned short ip_proto; 
 	char buf1[20];
 	char buf2[20];   
 	int chcnt =0;
@@ -49,9 +49,9 @@ void packet_analysis(const u_char *packet)
 		return;
 	}
 
-	ip_type = iphdr->ip_p;
+	ip_proto = iphdr->ip_p;
 
-	if(ip_type == IPPROTO_TCP)
+	if(ip_proto == IPPROTO_TCP)
 	{
 		packet += iphdr->ip_hl * 4; 
 		tcphdr = (struct libnet_tcp_hdr *)(packet); 
@@ -110,7 +110,10 @@ int main(int argc, char **argv)
 		res = pcap_next_ex(pcd, &header, &packet);
 		if(res > 0)
 			packet_analysis(packet);
+		if(res == -1 | res == -2)
+			exit(1);
 		else
 			continue;
+			
 	}
 }
